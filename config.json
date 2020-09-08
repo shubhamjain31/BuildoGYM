@@ -1,7 +1,13 @@
 {
   "params":
   {
-    "gym_name" : "BuildoGYM"
+    "gym_name" : "BuildoGYM",
+    "fb_url":"https://facebook.com/buddy.sj",
+    "tw_url":"https://twitter.com/Ess_Jay2",
+    "gh_url": "https://github.com/shubhamjain31",
+    "admin_user":"shubham",
+    "admin_password": "shubham@123",
+    "login_image":"login.png"
 
 
   }
