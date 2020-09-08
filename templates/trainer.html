@@ -1,12 +1,12 @@
 {% extends "layout.html" %}
 
-{% block title %}{{params["gym_name"]}} - Sign Up{% endblock %}
+{% block title %}{{params["gym_name"]}} - Trainer{% endblock %}
 
 <body>
 {% block body %}
 
 <div class="container px-3 py-4 bg-dark text-white">
-<h2 class="text-center my-2 bg-warning text-dark"> Join Now</h2>
+<h2 class="text-center my-2 bg-warning text-dark"> Trainers </h2>
     <form class="pt-2">
    <div class="form-row">
     <div class="form-group col-md-6">
@@ -18,34 +18,10 @@
       <input type="text" class="form-control" id="inputLname" placeholder="Last Name">
     </div>
   </div>
-  <div class="form-group">
-      <label for="inputPackage">Package</label>
-      <select id="inputPackage" class="form-control">
-        <option selected>Choose Package</option>
-        <option value="Annually">Annually</option>
-        <option value="Monthly">Monthly</option>
-        <option value="Quarterly">Quarterly</option>
-      </select>
-    </div>
     <div class="form-group">
-      <label for="inputShift">Shift</label>
-      <select id="inputShift" class="form-control">
-        <option selected>Choose Shift</option>
-        <option value="Morning">Morning</option>
-        <option value="Evening">Evening</option>
-        <option value="Night">Night</option>
-      </select>
-    </div>
-  <div class="form-row">
-    <div class="form-group col-md-6">
       <label for="inputEmail4">Email</label>
       <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
     </div>
-    <div class="form-group col-md-6">
-      <label for="inputPassword4">Password</label>
-      <input type="password" class="form-control" id="inputPassword4" placeholder="Password">
-    </div>
-  </div>
   <div class="form-group">
     <label for="inputMobile">Mobile Number</label>
     <input type="text" class="form-control" id="inputMobile" placeholder="Mobile Number">
@@ -65,7 +41,7 @@
         <option selected>Select Gender</option>
         <option value="Male">Male</option>
         <option value="Female">Female</option>
-        <option value="Other">Other</option>
+        <option value="Others">Others</option>
       </select>
     </div>
     <div class="form-group col-md-2">
@@ -81,7 +57,7 @@
       </label>
     </div>
   </div>
-  <button type="submit" class="btn btn-info">Sign in</button>
+  <button type="submit" class="btn btn-info">Save</button>
 </form>
 </div>
 {% endblock %}

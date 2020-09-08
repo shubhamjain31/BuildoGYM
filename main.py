@@ -7,9 +7,23 @@ from flask_sqlalchemy import SQLAlchemy
 
 with open('config.json', 'r') as c:
     params = json.load(c)["params"]
+    
+project_dir = os.path.dirname(os.path.abspath(__file__))
+database_file = "sqlite:///{}".format(os.path.join(project_dir, "gymdb.db"))
+
 
 app = Flask(__name__)
 app.secret_key = 'super-secret-key'
+app.config["SQLALCHEMY_DATABASE_URI"] = database_file
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+
+db = SQLAlchemy(app)
+
+class Book(db.Model):
+    title = db.Column(db.String(80), unique=True, nullable=False, primary_key=True)
+
+    def __repr__(self):
+        return "<Title: {}>".format(self.title)
 
 @app.route("/", methods=["GET", "POST"])
 def home():
@@ -31,7 +45,7 @@ def dashboard():
     
 @app.route("/signup", methods=["GET", "POST"])
 def signup():
-    return render_template('signup.html',params=params)
+    return render_template('payment.html',params=params)
     
 @app.route("/logout")
 def logout():
