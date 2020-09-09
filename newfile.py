@@ -4,11 +4,22 @@ from flask import render_template, flash, session
 import json
 import random
 from datetime import datetime
-from models import User, Packages, Shifts
-from app import app, db
+from flask_sqlalchemy import SQLAlchemy
+import model.User
 
 with open('config.json', 'r') as c:
     params = json.load(c)["params"]
+    
+project_dir = os.path.dirname(os.path.abspath(__file__))
+database_file = "sqlite:///{}".format(os.path.join(project_dir, "gymdb.db"))
+
+
+app = Flask(__name__)
+app.secret_key = 'super-secret-key'
+app.config["SQLALCHEMY_DATABASE_URI"] = database_file
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+
+db = SQLAlchemy(app)
 
 @app.route("/", methods=["GET", "POST"])
 def home():
@@ -63,28 +74,13 @@ def package_info():
             message = request.form.get('message')
             date = datetime.now()
             userDetail = User.query.filter_by(firstName=session['user'].capitalize()).first().email
+            print(userDetail)
             entry = Packages(title=title,fee=fee,createdBy=userDetail,modifiedBy=userDetail,createdDate=date,modifiedDate=date,message=message)
             db.session.add(entry)
             db.session.commit()
             flash('Data Saved Successfully')
     return render_template('package.html',params=params)
           
-@app.route("/shift_info", methods=["GET", "POST"])
-def shift_info():
-    if ('user' in session and session['user'] == params['admin_user']):
-        if request.method == 'POST':
-            title = request.form.get('title')
-            sfrom = request.form.get('shiftFrom')
-            sto = request.form.get('shiftTo')
-            message = request.form.get('message')
-            date = datetime.now()
-            userDetail = User.query.filter_by(firstName=session['user'].capitalize()).first().email
-            entry = Shifts(title=title,shiftFrom=sfrom,shiftTo=sto,createdBy=userDetail,modifiedBy=userDetail,createdDate=date,modifiedDate=date,message=message)
-            db.session.add(entry)
-            db.session.commit()
-            flash('Data Saved Successfully')
-    return render_template('shift.html',params=params)
-    
 @app.route("/logout")
 def logout():
     session.pop('user')
@@ -95,6 +91,8 @@ def test():
     if ('user' in session and session['user'] == params['admin_user']):
         u = Packages.query.all()
         print(u)
-        v = Shifts.query.all()
-        print(v)
         return render_template('dashboard.html', params=params)
+
+if __name__ == "__main__":
+    db.create_all()
+    app.run(host='0.0.0.0', port=8087, debug=True)

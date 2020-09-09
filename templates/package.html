@@ -16,7 +16,7 @@
     </ul>
   {% endif %}
 {% endwith %}
-    <form class="pt-2" action="/package_info" method="post">
+    <form class="pt-2" action="/package_info" method="post" onsubmit="return validatePackage()" name="myform">
   <div class="form-group">
     <label for="inputTitle">Package Title</label>
     <input type="text" class="form-control" id="inputTitle" placeholder="Package Title"  name="title">
@@ -42,3 +42,6 @@
 </div>
 {% endblock %}
 </body>
+{% block js %} 
+<script src="{{ url_for('static', filename='js/package.js') }}"></script>
+{% endblock %}

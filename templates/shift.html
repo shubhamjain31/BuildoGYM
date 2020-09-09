@@ -7,22 +7,31 @@
 
 <div class="container px-3 py-4 bg-dark text-white">
 <h2 class="text-center my-2 bg-warning text-dark"> Shifts</h2>
-    <form class="pt-2">
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class='text-center flashes'>
+    {% for message in messages %}
+      <strong class="text-success">{{ message }}</strong>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+    <form class="pt-2" action="/shift_info" method="post" onsubmit="return validateShift()" name="myform">
   <div class="form-group">
     <label for="inputTitle">Shift Title</label>
-    <input type="text" class="form-control" id="inputTitle" placeholder="Shift Title">
+    <input type="text" class="form-control" id="inputTitle" placeholder="Shift Title" name="title">
   </div>
   <div class="form-group">
     <label for="inputFrom">Shift From</label>
-    <input type="text" class="form-control" id="inputFrom" placeholder="Shift From">
+    <input type="text" class="form-control" id="inputFrom" placeholder="Shift From" name="shiftFrom">
   </div>
   <div class="form-group">
     <label for="inputTo">Shift To</label>
-    <input type="text" class="form-control" id="inputTo" placeholder="Shift To">
+    <input type="text" class="form-control" id="inputTo" placeholder="Shift To" name="shiftTo">
   </div>
   <div class="form-group">
     <label for="exampleFormControlTextarea1">Message</label>
-    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="message"></textarea>
   </div>
   <div class="form-group">
     <div class="form-check">
@@ -37,3 +46,6 @@
 </div>
 {% endblock %}
 </body>
+{% block js %} 
+<script src="{{ url_for('static', filename='js/shift.js') }}"></script>
+{% endblock %}
