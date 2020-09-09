@@ -7,20 +7,29 @@
 
 <div class="container px-3 py-4 bg-dark text-white">
 <h2 class="text-center my-2 bg-warning text-dark"> Join Now</h2>
-    <form class="pt-2">
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class='text-center flashes'>
+    {% for message in messages %}
+      <strong class="text-success">{{ message }}</strong>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+    <form class="pt-2" action="/register" method="post" onsubmit="return validateUser()" name="myform">
    <div class="form-row">
     <div class="form-group col-md-6">
       <label for="inputFname">First Name</label>
-      <input type="text" class="form-control" id="inpuFname" placeholder="First Name">
+      <input type="text" class="form-control" id="inputFname" placeholder="First Name" name="fname">
     </div>
     <div class="form-group col-md-6">
       <label for="inputLname">Last Name</label>
-      <input type="text" class="form-control" id="inputLname" placeholder="Last Name">
+      <input type="text" class="form-control" id="inputLname" placeholder="Last Name"  name="lname">
     </div>
   </div>
   <div class="form-group">
       <label for="inputPackage">Package</label>
-      <select id="inputPackage" class="form-control">
+      <select id="inputPackage" class="form-control"  name="package">
         <option selected>Choose Package</option>
         <option value="Annually">Annually</option>
         <option value="Monthly">Monthly</option>
@@ -29,7 +38,7 @@
     </div>
     <div class="form-group">
       <label for="inputShift">Shift</label>
-      <select id="inputShift" class="form-control">
+      <select id="inputShift" class="form-control"  name="shift">
         <option selected>Choose Shift</option>
         <option value="Morning">Morning</option>
         <option value="Evening">Evening</option>
@@ -39,29 +48,29 @@
   <div class="form-row">
     <div class="form-group col-md-6">
       <label for="inputEmail4">Email</label>
-      <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
+      <input type="email" class="form-control" id="inputEmail4" placeholder="Email" name="email">
     </div>
     <div class="form-group col-md-6">
       <label for="inputPassword4">Password</label>
-      <input type="password" class="form-control" id="inputPassword4" placeholder="Password">
+      <input type="password" class="form-control" id="inputPassword4" placeholder="Password" name="password">
     </div>
   </div>
   <div class="form-group">
     <label for="inputMobile">Mobile Number</label>
-    <input type="text" class="form-control" id="inputMobile" placeholder="Mobile Number">
+    <input type="text" class="form-control" id="inputMobile" placeholder="Mobile Number"  name="phone">
   </div>
   <div class="form-group">
     <label for="inputAddress">Address</label>
-    <input type="text" class="form-control" id="inputAddress" placeholder="Address">
+    <input type="text" class="form-control" id="inputAddress" placeholder="Address"  name="address">
   </div>
   <div class="form-row">
     <div class="form-group col-md-6">
       <label for="inputCity">City</label>
-      <input type="text" class="form-control" id="inputCity">
+      <input type="text" class="form-control" id="inputCity"  name="city">
     </div>
     <div class="form-group col-md-4">
       <label for="inputGender">Gender</label>
-      <select id="inputGender" class="form-control">
+      <select id="inputGender" class="form-control"  name="gender">
         <option selected>Select Gender</option>
         <option value="Male">Male</option>
         <option value="Female">Female</option>
@@ -70,12 +79,12 @@
     </div>
     <div class="form-group col-md-2">
       <label for="inputZip">Zip</label>
-      <input type="text" class="form-control" id="inputZip">
+      <input type="text" class="form-control" id="inputZip"  name="zipcode">
     </div>
   </div>
   <div class="form-group">
     <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="gridCheck">
+      <input class="form-check-input" type="checkbox" id="gridCheck"  name="cbox" value="tick">
       <label class="form-check-label" for="gridCheck">
         Check me out
       </label>
@@ -86,3 +95,7 @@
 </div>
 {% endblock %}
 </body>
+
+{% block js %} 
+<script src="{{ url_for('static', filename='js/user.js') }}"></script>
+{% endblock %}
