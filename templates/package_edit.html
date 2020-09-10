@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+
+{% block title %}{{params["gym_name"]}} - Packages{% endblock %}
+
+<body>
+{% block body %}
+
+<div class="container px-3 py-4 bg-dark text-white">
+<h2 class="text-center my-2 bg-warning text-dark"> Packages - Edit</h2>
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class='text-center flashes'>
+    {% for message in messages %}
+      <strong class="text-success">{{ message }}</strong>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+    <form class="pt-2" action="/package_edit/{{sno}}" method="post" onsubmit="return validatePackage()" name="myform">
+    <div class="form-group">
+    <label for="inputSno">Sno</label>
+    <input type="text" class="form-control" id="inputSno" placeholder="Serial Number"  name="sno" value="{{data.sno}}" readonly>
+  </div>
+  <div class="form-group">
+    <label for="inputTitle">Package Title</label>
+    <input type="text" class="form-control" id="inputTitle" placeholder="Package Title"  name="title" value="{{data.title}}">
+  </div>
+  <div class="form-group">
+    <label for="inputFee">Package Fee</label>
+    <input type="text" class="form-control" id="inputFee" placeholder="Package Fee"  name="fee" value="{{data.fee}}">
+  </div>
+  <div class="form-group">
+    <label for="exampleFormControlTextarea1">Message</label>
+    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"  name="message">{{data.message}}</textarea>
+  </div>
+  <div class="form-group">
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="gridCheck"  name="cbox">
+      <label class="form-check-label" for="gridCheck">
+        Check me out
+      </label>
+    </div>
+  </div>
+  <button type="submit" class="btn btn-info">Save</button>
+</form>
+</div>
+{% endblock %}
+</body>
+{% block js %} 
+<script src="{{ url_for('static', filename='js/package.js') }}"></script>
+{% endblock %}

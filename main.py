@@ -52,7 +52,7 @@ def register():
             db.session.add(entry)
             db.session.commit()
             flash('Data Saved Successfully')
-    return render_template('signup.html',params=params)
+    return render_template('register.html',params=params)
 
 @app.route("/package_info", methods=["GET", "POST"])
 def package_info():
@@ -144,6 +144,80 @@ def attendance_info():
              flash('Data Saved Successfully')
     return render_template('attendance.html',params=params,name=fullname)
     
+@app.route("/package_show", methods=["GET", "POST"])
+def package_show():
+    if ('user' in session and session['user'] == params['admin_user']):
+       alldata = Packages.query.all()
+       return render_template('packageList.html', params=params,alldata=alldata)
+       
+@app.route("/package_delete/<string:sno>", methods = ['GET', 'POST'])
+def package_delete(sno):
+    if ('user' in session and session['user'] == params['admin_user']):
+        data = Packages.query.filter_by(sno=sno).first()
+        db.session.delete(data)
+        db.session.commit()
+        flash('Data Deleted Successfully')
+    return redirect('/package_show')
+    
+@app.route("/package_edit/<string:sno>", methods=["GET", "POST"])
+def package_edit(sno):
+    if ('user' in session and session['user'] == params['admin_user']):
+       if request.method == 'POST':
+            title = request.form.get('title')
+            fee = request.form.get('fee')
+            message = request.form.get('message')
+            date = datetime.now()
+            userDetail = User.query.filter_by(firstName=session['user'].capitalize()).first().email
+            uData = Packages.query.filter_by(sno=sno).first()
+            uData.title = title
+            uData.fee = fee
+            uData.modifiedBy = userDetail
+            uData.modifiedDate = date
+            uData.message = message
+            db.session.commit()
+            flash('Data Updated Successfully')
+            return redirect('/package_edit/'+sno)
+       data = Packages.query.filter_by(sno=sno).first()
+       return render_template('package_edit.html', params=params,data=data,sno=sno)
+       
+@app.route("/shift_show", methods=["GET", "POST"])
+def shift_show():
+    if ('user' in session and session['user'] == params['admin_user']):
+       alldata = Shifts.query.all()
+       return render_template('shiftList.html', params=params,alldata=alldata)
+       
+@app.route("/shift_delete/<string:sno>", methods = ['GET', 'POST'])
+def shift_delete(sno):
+    if ('user' in session and session['user'] == params['admin_user']):
+        data = Shifts.query.filter_by(sno=sno).first()
+        db.session.delete(data)
+        db.session.commit()
+        flash('Data Deleted Successfully')
+    return redirect('/shift_show')
+    
+@app.route("/shift_edit/<string:sno>", methods=["GET", "POST"])
+def shift_edit(sno):
+    if ('user' in session and session['user'] == params['admin_user']):
+       if request.method == 'POST':
+            title = request.form.get('title')
+            sfrom = request.form.get('shiftFrom')
+            sto = request.form.get('shiftTo')
+            message = request.form.get('message')
+            date = datetime.now()
+            userDetail = User.query.filter_by(firstName=session['user'].capitalize()).first().email
+            uData = Shifts.query.filter_by(sno=sno).first()
+            uData.title = title
+            uData.shiftFrom = sfrom
+            uData.shiftTo = sto
+            uData.modifiedBy = userDetail
+            uData.modifiedDate = date
+            uData.message = message
+            db.session.commit()
+            flash('Data Updated Successfully')
+            return redirect('/shift_edit/'+sno)
+       data = Shifts.query.filter_by(sno=sno).first()
+       return render_template('shift_edit.html', params=params,data=data,sno=sno)
+       
 @app.route("/logout")
 def logout():
     session.pop('user')
@@ -152,6 +226,6 @@ def logout():
 @app.route("/test", methods=["GET", "POST"])
 def test():
     if ('user' in session and session['user'] == params['admin_user']):
-       v =  Attendance.query.all()
-       print(v)
-       return render_template('trainer.html', params=params)
+       #data = Shifts.query.filter_by(sno='1').first()
+       data = Shifts.query.all()
+       return render_template('shiftList.html', params=params,alldata=data)
