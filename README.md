@@ -9,14 +9,20 @@ Admin can log in to manage Gym members with the modules Like Add Package, Add Sh
 
 ##### Administration: 
 There would be some submodule under the Administration module.  
-* Add Packages 
-Add Shift 
-Add User 
-Add Trainers
-Manage Payment
-Manage Attendance 
+* Add Packages  
+* Add Shift  
+* Add User  
+* Add Trainers   
+* Manage Payment  
+* Manage Attendance
 
+##### Reports: 
+Admin can view reports for all.  
 
+### Technologies:  
+1) ***Front-End*** : HTML, CSS and JavaScript  
+2) ***Back-End*** : Python flask  
+3) ***Database*** : SQLite
 
 
 
