@@ -4,7 +4,7 @@ from flask import render_template, flash, session
 import json
 import random
 from datetime import datetime
-from models import User, Packages, Shifts
+from models import User, Packages, Shifts, Trainers, Payments, Attendance
 from app import app, db
 
 with open('config.json', 'r') as c:
@@ -85,6 +85,65 @@ def shift_info():
             flash('Data Saved Successfully')
     return render_template('shift.html',params=params)
     
+@app.route("/trainer_info", methods=["GET", "POST"])
+def trainer_info():
+    if ('user' in session and session['user'] == params['admin_user']):
+        if request.method == 'POST':
+            fname = request.form.get('fname')
+            lname = request.form.get('lname')
+            email = request.form.get('email')
+            phone = request.form.get('phone')
+            address = request.form.get('address')
+            city = request.form.get('city')
+            gender = request.form.get('gender')
+            zipcode = request.form.get('zipcode')
+            cbox = request.form.get('cbox')
+            for j in range(1):
+                ls=random.randint(1111,9999)     
+                trainerid=str(fname+lname+str(ls))
+            date = datetime.now()
+            entry = Trainers(firstName=fname,lastName=lname,email=email,mobileNo=phone,address=address,city=city,gender=gender,zip=zipcode,trainerId=trainerid,date=date)
+            db.session.add(entry)
+            db.session.commit()
+            flash('Data Saved Successfully')
+    return render_template('trainer.html',params=params)
+    
+@app.route("/payment_info", methods=["GET", "POST"])
+def payment_info():
+    uData = User.query.all()
+    fname=[fn.firstName for fn in uData]
+    lname=[ln.lastName for ln in uData]
+    fullname=zip(fname,lname)
+    if ('user' in session and session['user'] == params['admin_user']):
+       if request.method == 'POST':
+            name = request.form.get('username')
+            month = request.form.get('month')
+            date = request.form.get('date')
+            amount = request.form.get('amount')
+            message = request.form.get('message')
+            entry = Payments(userName=name,month=month,date=date,amount=amount,message=message)
+            db.session.add(entry)
+            db.session.commit()
+            flash('Data Saved Successfully')
+    return render_template('payment.html',params=params,name=fullname)
+    
+@app.route("/attendance_info", methods=["GET", "POST"])
+def attendance_info():
+    uData = User.query.all()
+    fname=[fn.firstName for fn in uData]
+    lname=[ln.lastName for ln in uData]
+    fullname=zip(fname,lname)
+    if ('user' in session and session['user'] == params['admin_user']):
+       if request.method == 'POST':
+             name = request.form.get('username')
+             date = request.form.get('date')
+             message = request.form.get('message')
+             entry = Attendance(userName=name,date=date,message=message)
+             db.session.add(entry)
+             db.session.commit()
+             flash('Data Saved Successfully')
+    return render_template('attendance.html',params=params,name=fullname)
+    
 @app.route("/logout")
 def logout():
     session.pop('user')
@@ -93,8 +152,6 @@ def logout():
 @app.route("/test", methods=["GET", "POST"])
 def test():
     if ('user' in session and session['user'] == params['admin_user']):
-        u = Packages.query.all()
-        print(u)
-        v = Shifts.query.all()
-        print(v)
-        return render_template('dashboard.html', params=params)
+       v =  Attendance.query.all()
+       print(v)
+       return render_template('trainer.html', params=params)
