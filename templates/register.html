@@ -1,4 +1,8 @@
+{% if session["user"] %}
 {% extends "layout.html" %}
+{% else %}
+{% extends "basic.html" %}
+{% endif %}
 
 {% block title %}{{params["gym_name"]}} - User{% endblock %}
 

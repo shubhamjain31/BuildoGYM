@@ -146,9 +146,10 @@ def attendance_info():
     
 @app.route("/package_show", methods=["GET", "POST"])
 def package_show():
-    if ('user' in session and session['user'] == params['admin_user']):
-       alldata = Packages.query.all()
-       return render_template('packageList.html', params=params,alldata=alldata)
+       if ('user' in session and session['user'] == params['admin_user']):
+       	alldata = Packages.query.all()
+       	return render_template('packageList.html', params=params,alldata=alldata)
+       return redirect('/')
        
 @app.route("/package_delete/<string:sno>", methods = ['GET', 'POST'])
 def package_delete(sno):
@@ -182,9 +183,10 @@ def package_edit(sno):
        
 @app.route("/shift_show", methods=["GET", "POST"])
 def shift_show():
-    if ('user' in session and session['user'] == params['admin_user']):
-       alldata = Shifts.query.all()
-       return render_template('shiftList.html', params=params,alldata=alldata)
+       if ('user' in session and session['user'] == params['admin_user']):
+       	alldata = Shifts.query.all()
+       	return render_template('shiftList.html', params=params,alldata=alldata)
+       return redirect('/')
        
 @app.route("/shift_delete/<string:sno>", methods = ['GET', 'POST'])
 def shift_delete(sno):
@@ -220,9 +222,10 @@ def shift_edit(sno):
        
 @app.route("/user_show", methods=["GET", "POST"])
 def user_show():
-    if ('user' in session and session['user'] == params['admin_user']):
-       alldata = User.query.all()
-       return render_template('userList.html', params=params,alldata=alldata)
+       if ('user' in session and session['user'] == params['admin_user']):
+       	alldata = User.query.all()
+       	return render_template('userList.html', params=params,alldata=alldata)
+       return redirect('/')
        
 @app.route("/user_delete/<string:sno>", methods = ['GET', 'POST'])
 def user_delete(sno):
@@ -269,9 +272,10 @@ def user_edit(sno):
        
 @app.route("/trainer_show", methods=["GET", "POST"])
 def trainer_show():
-    if ('user' in session and session['user'] == params['admin_user']):
-       alldata = Trainers.query.all()
-       return render_template('trainerList.html', params=params,alldata=alldata)
+       if ('user' in session and session['user'] == params['admin_user']):
+       	alldata = Trainers.query.all()
+       	return render_template('trainerList.html', params=params,alldata=alldata)
+       return redirect('/')
        
 @app.route("/trainer_delete/<string:sno>", methods = ['GET', 'POST'])
 def trainer_delete(sno):
@@ -313,9 +317,10 @@ def trainer_edit(sno):
        
 @app.route("/attendance_show", methods=["GET", "POST"])
 def attendance_show():
-    if ('user' in session and session['user'] == params['admin_user']):
-       alldata = Attendance.query.all()
-       return render_template('attendanceList.html', params=params,alldata=alldata)
+       if ('user' in session and session['user'] == params['admin_user']):
+       	alldata = Attendance.query.all()
+       	return render_template('attendanceList.html', params=params,alldata=alldata)
+       return redirect('/')
        
 @app.route("/attendance_delete/<string:sno>", methods = ['GET', 'POST'])
 def attendance_delete(sno):
@@ -346,9 +351,10 @@ def attendance_edit(sno):
        
 @app.route("/payment_show", methods=["GET", "POST"])
 def payment_show():
-    if ('user' in session and session['user'] == params['admin_user']):
-       alldata = Payments.query.all()
-       return render_template('paymentList.html', params=params,alldata=alldata)
+       if ('user' in session and session['user'] == params['admin_user']):
+       	alldata = Payments.query.all()
+       	return render_template('paymentList.html', params=params,alldata=alldata)
+       return redirect('/')
        
 @app.route("/payment_delete/<string:sno>", methods = ['GET', 'POST'])
 def payment_delete(sno):
