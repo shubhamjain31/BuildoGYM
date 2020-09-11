@@ -4,8 +4,8 @@ from flask import render_template, flash, session
 import json
 import random
 from datetime import datetime
-from models import User, Packages, Shifts, Trainers, Payments, Attendance
-from app import app, db
+from models import User, Packages, Shifts, Trainers, Payments, Attendance, Contacts
+from app import app, db, mail
 
 with open('config.json', 'r') as c:
     params = json.load(c)["params"]
@@ -350,14 +350,69 @@ def payment_show():
        alldata = Payments.query.all()
        return render_template('paymentList.html', params=params,alldata=alldata)
        
+@app.route("/payment_delete/<string:sno>", methods = ['GET', 'POST'])
+def payment_delete(sno):
+    if ('user' in session and session['user'] == params['admin_user']):
+        data = Payments.query.filter_by(sno=sno).first()
+        db.session.delete(data)
+        db.session.commit()
+        flash('Data Deleted Successfully')
+    return redirect('/payment_show')
+    
+@app.route("/payment_edit/<string:sno>", methods=["GET", "POST"])
+def payment_edit(sno):
+    if ('user' in session and session['user'] == params['admin_user']):
+       if request.method == 'POST':
+            name = request.form.get('username')
+            month = request.form.get('month')
+            date = request.form.get('date')
+            amount = request.form.get('amount')
+            message = request.form.get('message')
+            userDetail = User.query.filter_by(firstName=session['user'].capitalize()).first().email
+            uData = Payments.query.filter_by(sno=sno).first()
+            uData.userName = name
+            uData.month = month
+            uData.date = date
+            uData.amount = amount
+            uData.message = message
+            db.session.commit()
+            flash('Data Updated Successfully')
+            return redirect('/payment_edit/'+sno)
+       data = Payments.query.filter_by(sno=sno).first()
+       uData = User.query.all()
+       fname=[fn.firstName for fn in uData]
+       lname=[ln.lastName for ln in uData]
+       fullname=zip(fname,lname)
+       return render_template('payment_edit.html', params=params,data=data,sno=sno,fullname=fullname)
+       
 @app.route("/logout")
 def logout():
     session.pop('user')
     return redirect('/')
 
+@app.route("/about_us", methods=["GET", "POST"])
+def about_us():
+	return render_template('aboutUs.html', params=params)
+	
+@app.route("/contact_us", methods = ['GET', 'POST'])
+def contact_us():
+    if(request.method=='POST'):
+        name = request.form.get('name')
+        email = request.form.get('email')
+        phone = request.form.get('phone')
+        message = request.form.get('message')
+        entry = Contacts(name=name, phone_num = phone, msg = message, date= datetime.now(),email = email )
+        db.session.add(entry)
+        db.session.commit()
+        flash('Data Saved Successfully')
+        mail.send_message('New message from ' + name,
+                          sender=email,
+                          recipients = [params['gmail-user']],
+                          body = message + "\n" + phone
+                          )
+    return render_template('contactUs.html', params=params)
+
 @app.route("/test", methods=["GET", "POST"])
 def test():
-    if ('user' in session and session['user'] == params['admin_user']):
-       #data = Shifts.query.filter_by(sno='1').first()
-       data = Shifts.query.all()
-       return render_template('shiftList.html', params=params,alldata=data)
+	print(session.get('user'))
+	return "OK"

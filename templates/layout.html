@@ -14,7 +14,7 @@
   </head>
   <body>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand font-italic" href="/">Buildo<span class="text-success">GYM</span></a>
+  <a class="navbar-brand font-italic" href="/dashboard">Buildo<span class="text-success">GYM</span></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -22,47 +22,47 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="/dashboard">Home <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Adminstration
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Add Pack</a>
+          <a class="dropdown-item" href="/package_info">Add Package</a>
            <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Add Shift</a>
+          <a class="dropdown-item" href="/shift_info">Add Shift</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Add User</a>
+          <a class="dropdown-item" href="/register">Add User</a>
        <div class="dropdown-divider"></div>
-        <a class="dropdown-item" href="#">Add Trainer</a>
+        <a class="dropdown-item" href="/trainer_info">Add Trainer</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Payment</a>
+          <a class="dropdown-item" href="/payment_info">Add Payment</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Add Attendence</a>
+          <a class="dropdown-item" href="/attendance_info">Add Attendence</a>
       </li>
         <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Report
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Pack List</a>
+          <a class="dropdown-item" href="/package_show">Package List</a>
            <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Shift List</a>
+          <a class="dropdown-item" href="/shift_show">Shift List</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">User List</a>
+          <a class="dropdown-item" href="/user_show">User List</a>
        <div class="dropdown-divider"></div>
-        <a class="dropdown-item" href="#">Trainer List</a>
+        <a class="dropdown-item" href="/trainer_show">Trainer List</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Payment List</a>
+          <a class="dropdown-item" href="/payment_show">Payment List</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Attendence List</a>
+          <a class="dropdown-item" href="/attendance_show">Attendence List</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">ContactUs</a>
+        <a class="nav-link" href="/contact_us">Contact Us</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">About</a>
+        <a class="nav-link" href="/about_us">About Us</a>
       </li>
         <li class="nav-item">
             <a href="/logout"><button class="btn btn-outline-success float-right" type="submit">Logout</button></a>
@@ -103,7 +103,7 @@
                 <a href="{{params['gh_url']}}" target="_blank">
                   <span class="fa-stack fa-lg">
                     <i class="fa fa-circle fa-stack-2x"></i>
-                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                    <i class="fa fa-instagram fa-stack-1x fa-inverse"></i>
                   </span>
                 </a>
               </li>
