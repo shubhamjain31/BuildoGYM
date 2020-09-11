@@ -1,12 +1,12 @@
 {% extends "layout.html" %}
 
-{% block title %}{{params["gym_name"]}} - Shifts{% endblock %}
+{% block title %}{{params["gym_name"]}} - Payment{% endblock %}
 
 <body>
 {% block body %}
 
 <div class="container px-3 py-4 bg-dark text-white">
-<h2 class="text-center my-2 bg-warning text-dark"> Shifts List</h2>
+<h2 class="text-center my-2 bg-warning text-dark"> Payment List</h2>
 {% with messages = get_flashed_messages() %}
   {% if messages %}
     <ul class='text-center flashes'>
@@ -29,25 +29,28 @@
     <thead>
       <tr>
         <th>Sno</th>
-        <th>Shift</th>
-        <th>Shift From Time</th>
-        <th>Shift To Time</th>
+        <th>User Name</th>
+        <th>Month</th>
+        <th>Date</th>
+        <th>Amount</th>
         <th>Description</th>
         <th>Edit</th>
         <th>Delete</th>
       </tr>
     </thead>
     <tbody>
-    {% if alldata|length != 0 %}
+
+      {% if alldata|length != 0 %}
       {% for data in alldata %}
       <tr>
         <td>{{data.sno}}</td>
-        <td>{{data.title}}</td>
-        <td>{{data.shiftFrom}}</td>
-        <td>{{data.shiftTo}}</td>
+        <td>{{data.userName}}</td>
+        <td>{{data.month}}</td>
+        <td>{{data.date}}</td>
+        <td>{{data.amount}}</td>
         <td>{{data.message}}</td>
-        <td><a href="/shift_edit/{{data.sno}}"><button class="btn btn-primary" >Edit</button></a></td>
-        <td><a href="/shift_delete/{{data.sno}}"><button class="btn btn-danger">Delete</button></a></td>
+        <td><a href="/payment_edit/{{data.sno}}"><button class="btn btn-primary" >Edit</button></a></td>
+        <td><a href="/payment_delete/{{data.sno}}"><button class="btn btn-danger">Delete</button></a></td>
       </tr>
       {% endfor %}
       {% else %}

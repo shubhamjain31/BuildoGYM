@@ -218,6 +218,138 @@ def shift_edit(sno):
        data = Shifts.query.filter_by(sno=sno).first()
        return render_template('shift_edit.html', params=params,data=data,sno=sno)
        
+@app.route("/user_show", methods=["GET", "POST"])
+def user_show():
+    if ('user' in session and session['user'] == params['admin_user']):
+       alldata = User.query.all()
+       return render_template('userList.html', params=params,alldata=alldata)
+       
+@app.route("/user_delete/<string:sno>", methods = ['GET', 'POST'])
+def user_delete(sno):
+    if ('user' in session and session['user'] == params['admin_user']):
+        data = User.query.filter_by(sno=sno).first()
+        db.session.delete(data)
+        db.session.commit()
+        flash('Data Deleted Successfully')
+    return redirect('/user_show')
+    
+@app.route("/user_edit/<string:sno>", methods=["GET", "POST"])
+def user_edit(sno):
+    if ('user' in session and session['user'] == params['admin_user']):
+       if request.method == 'POST':
+            fname = request.form.get('fname')
+            lname = request.form.get('lname')
+            package = request.form.get('package')
+            shift = request.form.get('shift')
+            email = request.form.get('email')
+            password = request.form.get('password')
+            phone = request.form.get('phone')
+            address = request.form.get('address')
+            city = request.form.get('city')
+            gender = request.form.get('gender')
+            zipcode = request.form.get('zipcode')
+            cbox = request.form.get('cbox')
+            date = datetime.now()
+            uData = User.query.filter_by(sno=sno).first()
+            uData.firstName = fname
+            uData.lastName = lname
+            uData.package = package
+            uData.shift = shift
+            uData.email = email
+            uData.mobileNo = phone
+            uData.address = address
+            uData.city = city
+            uData.gender = gender
+            uData.zip = zipcode
+            db.session.commit()
+            flash('Data Updated Successfully')
+            return redirect('/user_edit/'+sno)
+       data = User.query.filter_by(sno=sno).first()
+       return render_template('user_edit.html', params=params,data=data,sno=sno)
+       
+@app.route("/trainer_show", methods=["GET", "POST"])
+def trainer_show():
+    if ('user' in session and session['user'] == params['admin_user']):
+       alldata = Trainers.query.all()
+       return render_template('trainerList.html', params=params,alldata=alldata)
+       
+@app.route("/trainer_delete/<string:sno>", methods = ['GET', 'POST'])
+def trainer_delete(sno):
+    if ('user' in session and session['user'] == params['admin_user']):
+        data = Trainers.query.filter_by(sno=sno).first()
+        db.session.delete(data)
+        db.session.commit()
+        flash('Data Deleted Successfully')
+    return redirect('/trainer_show')
+    
+@app.route("/trainer_edit/<string:sno>", methods=["GET", "POST"])
+def trainer_edit(sno):
+    if ('user' in session and session['user'] == params['admin_user']):
+       if request.method == 'POST':
+            fname = request.form.get('fname')
+            lname = request.form.get('lname')
+            email = request.form.get('email')
+            phone = request.form.get('phone')
+            address = request.form.get('address')
+            city = request.form.get('city')
+            gender = request.form.get('gender')
+            zipcode = request.form.get('zipcode')
+            cbox = request.form.get('cbox')
+            date = datetime.now()
+            uData = Trainers.query.filter_by(sno=sno).first()
+            uData.firstName = fname
+            uData.lastName = lname
+            uData.email = email
+            uData.mobileNo = phone
+            uData.address = address
+            uData.city = city
+            uData.gender = gender
+            uData.zip = zipcode
+            db.session.commit()
+            flash('Data Updated Successfully')
+            return redirect('/trainer_edit/'+sno)
+       data = Trainers.query.filter_by(sno=sno).first()
+       return render_template('trainer_edit.html', params=params,data=data,sno=sno)
+       
+@app.route("/attendance_show", methods=["GET", "POST"])
+def attendance_show():
+    if ('user' in session and session['user'] == params['admin_user']):
+       alldata = Attendance.query.all()
+       return render_template('attendanceList.html', params=params,alldata=alldata)
+       
+@app.route("/attendance_delete/<string:sno>", methods = ['GET', 'POST'])
+def attendance_delete(sno):
+    if ('user' in session and session['user'] == params['admin_user']):
+        data = Attendance.query.filter_by(sno=sno).first()
+        db.session.delete(data)
+        db.session.commit()
+        flash('Data Deleted Successfully')
+    return redirect('/attendance_show')
+    
+@app.route("/attendance_edit/<string:sno>", methods=["GET", "POST"])
+def attendance_edit(sno):
+    if ('user' in session and session['user'] == params['admin_user']):
+       if request.method == 'POST':
+            name = request.form.get('name')
+            date = request.form.get('date')
+            message = request.form.get('message')
+            cbox = request.form.get('cbox')
+            uData = Attendance.query.filter_by(sno=sno).first()
+            uData.userName = name
+            uData.date = date
+            uData.message = message
+            db.session.commit()
+            flash('Data Updated Successfully')
+            return redirect('/attendance_edit/'+sno)
+       data = Attendance.query.filter_by(sno=sno).first()
+       return render_template('attendance_edit.html', params=params,data=data,sno=sno)
+       
+@app.route("/payment_show", methods=["GET", "POST"])
+def payment_show():
+    if ('user' in session and session['user'] == params['admin_user']):
+       alldata = Payments.query.all()
+       return render_template('paymentList.html', params=params,alldata=alldata)
+       
 @app.route("/logout")
 def logout():
     session.pop('user')
