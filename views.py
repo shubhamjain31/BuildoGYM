@@ -5,6 +5,7 @@ import json
 import random
 from datetime import datetime
 from models import User, Packages, Shifts, Trainers, Payments, Attendance, Contacts
+from sqlalchemy import or_
 from app import app, db, mail
 
 with open('config.json', 'r') as c:
@@ -418,6 +419,38 @@ def contact_us():
                           )
     return render_template('contactUs.html', params=params)
 
+@app.route("/search", methods=["GET", "POST"])
+def search():
+    if ('user' in session and session['user'] == params['admin_user']):
+        if request.method == 'POST':
+            path = request.form.get('list')
+            print(path)
+            data = request.form.get('search')
+            nameList = data.split()
+            fname = nameList[0]
+            search = "%{}%".format(fname)
+            print(search)
+            if path == "userList":
+            	users = User.query.filter((User.firstName.like(search))|(User.lastName.like(search))).all()
+            	print(users)
+            elif path == "trainerList":
+            	users = Trainers.query.filter((Trainers.firstName.like(search))|(Trainers.lastName.like(search))).all()
+            	print(users)
+            elif path == "packageList":
+            	users = Packages.query.filter(Packages.title.like(search)).all()
+            	print(users)
+            elif path == "shiftList":
+            	users = Shifts.query.filter(Shifts.title.like(search)).all()
+            	print(users)
+            elif path == "paymentList":
+            	users = Payments.query.filter(Payments.userName.like(search)).all()
+            	print(users)
+            else:
+            	users = Attendance.query.filter(Attendance.userName.like(search)).all()
+            	print(users)
+            #flash('Data Saved Successfully')
+    return render_template(path+'.html',params=params,alldata=users)
+    
 @app.route("/test", methods=["GET", "POST"])
 def test():
 	print(session.get('user'))

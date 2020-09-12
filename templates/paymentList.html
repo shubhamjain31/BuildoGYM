@@ -16,7 +16,8 @@
     </ul>
   {% endif %}
 {% endwith %}
-    <form class="w-50 pt-2 mx-auto" action="" method="post" name="myform">
+    <form class="w-50 pt-2 mx-auto" action="/search" method="post" name="myform">
+    <input type="hidden" name="list" value="paymentList">
     <input class="form-control mr-sm-2 mb-3" type="search" placeholder="Search" aria-label="Search" name="search">
     <div class="text-center">
       <button class="btn btn-outline-success pt-2" type="submit">Search</button>
