@@ -1,6 +1,6 @@
 # BuildoGYM
 
-This project is simply based on Gym Management System and it is a dynamic website using python technology like ***flask***.
+This project is simply based on Gym Management System and it is a dynamic website using Python framework like ***flask***.
 
 ### Modules:
 
@@ -21,7 +21,7 @@ Admin can view reports for all.
 
 ### Technologies:  
 1) ***Front-End*** : HTML, CSS and JavaScript  
-2) ***Back-End*** : Python flask  
+2) ***Back-End*** : Python flask franework 
 3) ***Database*** : SQLite
 
 
